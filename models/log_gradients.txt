@@ -1,0 +1,124 @@
+Leena Bora
+26 Followers
+About
+Follow
+
+
+Upgrade
+
+
+
+
+
+
+How to keep a track of Gradients (Vanishing/Exploding Gradients)
+Leena Bora
+Leena Bora
+
+Apr 1, 2020·5 min read
+
+
+
+
+Using Keras-TensorFlow 2.1 and Tensor Board
+“Introducing non-linearity via an activation function allows us to approximate any function. It’s quite simple, really”. — Elon Musk
+When it is said “ANY problem”, it literally means:
+Given just an image , for example image of someone taking a bath, computer is capable of distinguishing between whether someone is taking a shower at home or someone is swimming in an ocean
+Or when you are writing an email (and you’re using Gmail), it auto completes sentence for you
+Or as one of my friend who has recently published a paper regarding “Predicting star formation properties of galaxies” using deep learning.
+Or even commanding Alexa to obey your order or hailing a driverless ride in cab
+But how does deep-learning do that?
+An abstract and short answer is:
+If somehow we could model human intelligence in the form of functions (mathematical functions), deep learning is capable of solving any exceedingly complex problems.
+And mathematical abstract answer is — by using techniques:
+* calculus (differentiation)
+* linear algebra
+And even more abstract answer is:
+forward propagation
+backpropagation (a chain rule of partial differentiation — Remember, we have studied this in our junior college days and we hated it :-x )
+As Jeff Dean (Lead of Google’s AI division) mentioned in one of his conference talks, that All of Deep Learning and Modern Machine Learning (let that be simple Neural Network, CNN, Sequence Models like RNN or even more advanced models like GAN) is all about chain rule of differentiation.
+So at the core, deep learning is all about finding gradients using chain rule of derivatives and adjusting the learning parameters .
+(In layman’s term — We start machine learning with some random assumptions (mathematical assumptions which are called as parameters or weights) and gradients guides whether to increase or decrease these “machine learning parameters” so as to achieve an optimal parameters.)
+So we start machine learning journey with some random values and gradients allows us to find an optimal values eventually.
+But due to the nature of “chain rule of derivatives” (which is nothing but a long chain of multiplication of gradients), most of the times these gradients face one of these 2 major issues:
+1. Vanishing Gradients (Gradients become infinitely small)
+Imagine what will happen when we multiply:
+0.0005 * 0.01e-15 * 0.07e-4 * ……..
+2. Exploding Gradients (Gradients become infinitely large)
+Imagine what will happen when we multiply:
+415 * 671e+15 * 8e+4 * ……..
+So it becomes very important to keep a track of these gradients while training our machine learning model.
+But how to keep a track of these gradients?
+As now days, Keras-Tensorflow is de facto choice for building deep learning applications, We shall see here, how to track these gradients using Keras-Tensorflow 2.1 and TensorBoard.
+Note: Since the focus of this blog is not about TensorBoard, I haven’t mentioned the TensorBoard set-up instructions. If you just google TensorBoard, it will show you many tutorials on how to set-up that. Trust me it is very simple!
+Also we assume that we have basic understanding of differentiation and gradient calculations.
+
+Prior to Tensorflow 2.1:
+Prior to Tensorflow 2.1, it was very easy to track these gradients with TensorBoard Callback.
+callback_tb = keras.callbacks.TensorBoard(log_dir=<log_dir> , write_grads = True)
+And that’s it, Tensorboard will show the gradient distribution.
+Tensorflow 2.1:
+“write_grads=True” has been deprecated in TensorFlow 2.1.
+Hence in order to analyse the gradients in TensorFlow 2.1, there is some manual work required which is not very straight forward. Also documentation around this is also not very great. I couldn’t find any source/blog which explains how to do this. I had to spend quite a bit of time getting this to work. So I thought it might be useful for others.
+Let’s get started:
+We will take an example of simple model here.
+
+
+Create a directory where we would like to store our intermediate result of gradients calculations (From this directory Tensorboard will read it for graphical rendering)
+
+We know that, while training our model (preferably after every epoch) , we need to record all the gradients at the above location. To do this we will use TensorBoard callback. (To be precise we will subclass it.)
+
+Now we will implement above on_epoch_end() to calculate and save gradients.
+Let’s first calculate gradients:
+
+So what’s happening here:
+On every epoch end, for a given state of weights, we will calculate the loss:
+This gives the probability of predicted class:
+y_pred_proba= (layer3(layer2(layer1(X_train))
+Calculate loss:
+loss = binary_crossentropy(y_train, y_pred_proba)
+Now we need to calculate, gradients for this loss, wrt current weights.
+For this we will use TensorFlow 2.1’s GradientTape API.
+with tf.GradientTape() as tape:
+     # This capture current state of weights
+       tape.watch(model.trainable_weights)
+     # Calculate loss for given current state of weights
+           loss = binary_crossentropy(y_train, (layer2 ( layer1(X_train)))))))
+# Calculate Grads wrt current weights
+   grads = tape.gradient(loss, layer1.trainable_weights)
+Cool at this stage, we have calculated the gradients, now we need to store it to the folder (using TesnbordBoard API) so that Tensorboard can read it for graphical rendering.
+
+With this, after model training is completed, we will have all the gradients stored in the specified directory.
+Now let’s visualize this using TensorBoard
+
+
+
+That’s it. Now based on gradient distribution (vanishing, exploding) we will have to take appropriate actions (may be using activation function like ‘ReLU’ in case of vanishing gradients or or Gradient Clipping in case of exploding gradients.)
+I hope you find this useful.
+Leena Bora
+Follow
+219
+
+
+2
+
+
+219
+
+
+2
+
+
+
+
+Gradient Tracking
+Gradient Analysis
+Tensorboard
+TensorFlow
+More from Leena Bora
+Follow
+About
+
+Help
+
+Legal
