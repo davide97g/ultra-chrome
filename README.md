@@ -23,6 +23,7 @@ Repository for the Human Data Analytics project
     /data
     - data.tar
     - data.tar.gz
+/docs
 /notebooks
     - attentive-chrome.ipynb
     - models.ipynb
