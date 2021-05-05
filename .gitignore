@@ -131,4 +131,8 @@ dmypy.json
 # dataset folder
 dataset
 
+# models saved
 models
+
+# vscode settings
+.vscode
