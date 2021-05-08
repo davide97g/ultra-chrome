@@ -136,3 +136,7 @@ models
 
 # vscode settings
 .vscode
+
+notebooks/.*
+
+notebooks/checkpoint
