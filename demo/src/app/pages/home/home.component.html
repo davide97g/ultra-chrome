@@ -1,4 +1,30 @@
-<div style="text-align: center; margin-top: 50px">
-  <h1>Ultra Chrome Live Demo</h1>
-  <button (click)="predict()">Predict</button>
+<div id="container">
+  <h1>Ultra Chrome</h1>
+
+  <mat-form-field appearance="outline" color="accent">
+    <mat-label>Select a model</mat-label>
+    <mat-select (selectionChange)="selectModel($event.value)">
+      <mat-option *ngFor="let model of models" value="{{ model }}">{{
+        model
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <br />
+  <br />
+  <mat-slide-toggle [(ngModel)]="isExpressed">Gene Expressed</mat-slide-toggle>
+  <br />
+  <br />
+  <br />
+  <button mat-raised-button color="accent" (click)="predict()">Predict</button>
+</div>
+
+<!--The content below is only a placeholder and can be replaced.-->
+<div id="chart" *ngIf="chartOptions">
+  <apx-chart
+    [series]="chartOptions.series"
+    [chart]="chartOptions.chart"
+    [dataLabels]="chartOptions.dataLabels"
+    [title]="chartOptions.title"
+    [colors]="chartOptions.colors"
+  ></apx-chart>
 </div>
