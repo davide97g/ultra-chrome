@@ -140,3 +140,6 @@ models
 notebooks/.*
 
 notebooks/checkpoint
+
+
+.firebase
