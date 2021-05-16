@@ -1,4 +1,5 @@
 import flask
+import os
 from flask import request
 from flask_cors import CORS, cross_origin
 
@@ -20,6 +21,7 @@ CORS(app)
 @app.route("/", methods=["GET"])
 @cross_origin()
 def home():
+    print(os.path.dirname)
     return "<h1>ultra-chrome-server</h1><p>Backend server for ultra chrome demo webapp.</p>"
 
 
