@@ -132,7 +132,10 @@ dmypy.json
 dataset
 
 # models saved
-models
+
+models/separated
+
+# !models/Ultra_Chrome
 
 # vscode settings
 .vscode
@@ -140,6 +143,5 @@ models
 notebooks/.*
 
 notebooks/checkpoint
-
 
 .firebase
