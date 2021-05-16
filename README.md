@@ -1,5 +1,7 @@
 # ultra-chrome
 
+[![Firebase Hosting](https://github.com/davide97g/ultra-chrome/actions/workflows/firebase-hosting-merge.yml/badge.svg?branch=main)](https://github.com/davide97g/ultra-chrome/actions/workflows/firebase-hosting-merge.yml)
+
 Repository for the Human Data Analytics project
 
 ## dataset
