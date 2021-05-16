@@ -344,7 +344,7 @@ const flat_array2 = [
   styleUrls: ['./home.component.sass'],
 })
 export class HomeComponent implements OnInit {
-  constructor(private api: ApiService) {}
+  constructor() {}
 
   ngOnInit(): void {}
 
@@ -352,7 +352,9 @@ export class HomeComponent implements OnInit {
     // Load our saved model from current directory (which will be
     // hosted via Firebase Hosting)
     // Relative URL provided for my-model.json.
-    const model = await tf.loadLayersModel('assets/Ultra_Chrome/model.json');
+    const model = await tf.loadLayersModel(
+      'assets/tf-models/Ultra_Chrome/model.json'
+    );
     // Once model is loaded, let's try using it to make a prediction!
     let prediction = model.predict(tf.tensor4d(flat_array2, [1, 5, 100, 1]));
     // Print to developer console for now.
