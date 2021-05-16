@@ -33,8 +33,8 @@ def predictUltraChrome():
 @app.route("/results", methods=["GET"])
 @cross_origin()
 def getResults():
-    model = request.json.get("model")
-    is_separated = request.json.get("sep")
+    model = request.args.get("model")
+    is_separated = request.args.get("sep")
     return get_results(model, is_separated)
 
 
