@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from 'src/app/services/api.service';
 import * as tf from '@tensorflow/tfjs';
 
 const flat_array = [
