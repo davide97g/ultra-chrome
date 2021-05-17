@@ -38,67 +38,26 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  public generateData(count, yrange) {
-    var i = 0;
-    var series = [];
-    while (i < count) {
-      var x = 'w' + (i + 1).toString();
-      var y =
-        Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
-
+  createSeries(data: number[], number_of_series: number) {
+    let series = [];
+    let row_unit = data.length / number_of_series; // 500 / 5 => 100
+    // s = 0,1,2,3,4
+    for (let s = 0; s < number_of_series; s++) {
+      let row_series = [];
+      // i=0 --> 100, i=100 --> 200, ...
+      for (let i = s * row_unit; i < (s + 1) * row_unit; i++)
+        row_series.push({ x: '' + ((i + 1) % row_unit), y: data[i] });
       series.push({
-        x: x,
-        y: y,
+        name: 'HM' + (s + 1),
+        data: row_series,
       });
-      i++;
     }
     return series;
   }
 
-  formatSeries(row) {
-    let series = [];
-    for (let i = 0; i < row.length; i++) series.push({ x: i + 1, y: row[i] });
-  }
-
   createHeatmap(dataset: number[], label: boolean) {
     this.chartOptions = {
-      series: [
-        {
-          name: 'HM1',
-          data: this.generateData(18, {
-            min: 0,
-            max: 90,
-          }),
-        },
-        {
-          name: 'HM2',
-          data: this.generateData(18, {
-            min: 0,
-            max: 90,
-          }),
-        },
-        {
-          name: 'HM3',
-          data: this.generateData(18, {
-            min: 0,
-            max: 90,
-          }),
-        },
-        {
-          name: 'HM4',
-          data: this.generateData(18, {
-            min: 0,
-            max: 90,
-          }),
-        },
-        {
-          name: 'HM5',
-          data: this.generateData(18, {
-            min: 0,
-            max: 90,
-          }),
-        },
-      ],
+      series: this.createSeries(dataset, 5),
       chart: {
         height: 350,
         type: 'heatmap',
@@ -109,15 +68,36 @@ export class HomeComponent implements OnInit {
       colors: [label ? this.positive_color : this.negative_color],
       title: {
         text: 'Gene ' + (label ? 'Expressed' : 'Not Expressed'),
+        style: {
+          fontFamily: 'Fira Code Light',
+          // color: '#f1faee',
+        },
+      },
+      xaxis: {
+        labels: {
+          style: {
+            fontFamily: 'Fira Code Light',
+          },
+        },
+      },
+      yaxis: {
+        labels: {
+          style: {
+            fontFamily: 'Fira Code Light',
+          },
+        },
       },
     };
   }
 
   async selectModel(model_name: string) {
-    this.model = await tf.loadLayersModel(
-      'assets/tf-models/' + model_name.replace(' ', '_') + '/model.json'
-    );
-    console.info(this.model.layers[0].inputSpec[0].shape);
+    try {
+      this.model = await tf.loadLayersModel(
+        'assets/tf-models/' + model_name.replace(' ', '_') + '/model.json'
+      );
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   async predict() {
@@ -143,5 +123,9 @@ export class HomeComponent implements OnInit {
       console.info(prediction.toString());
       this.createHeatmap(testset, this.isExpressed);
     }
+  }
+
+  upload() {
+    console.info('upload');
   }
 }
