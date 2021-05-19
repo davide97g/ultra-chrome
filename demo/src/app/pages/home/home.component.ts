@@ -90,7 +90,7 @@ export class HomeComponent implements OnInit {
     };
   }
 
-  async selectModel(model_name: string) {
+  async selectModel(model_name: any) {
     try {
       this.model = await tf.loadLayersModel(
         'assets/tf-models/' + model_name.replace(' ', '_') + '/model.json'
