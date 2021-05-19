@@ -1,29 +1,52 @@
 <div id="container">
   <h1>Ultra Chrome</h1>
+  <div class="input-cell">
+    <button mat-raised-button color="primary" (click)="upload()">Upload</button>
+    <br />
+    <br />
+    <mat-slide-toggle [(ngModel)]="isExpressed"
+      >Gene Expressed</mat-slide-toggle
+    >
+  </div>
+  <div class="input-cell">
+    <button mat-raised-button color="accent" (click)="loadExample(true)">
+      Load Expressed Example
+    </button>
+    <br />
+    <br />
+    <button mat-raised-button color="primary" (click)="loadExample(false)">
+      Load Not Expressed Example
+    </button>
+  </div>
 
-  <mat-form-field appearance="outline" color="accent">
-    <mat-label>Select a model</mat-label>
-    <mat-select (selectionChange)="selectModel($event.value)">
-      <mat-option *ngFor="let model of models" value="{{ model }}">{{
-        model
-      }}</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <br />
-  <br />
-  <button mat-raised-button color="primary" (click)="upload()">Upload</button>
-  <br />
-  <br />
-  <mat-slide-toggle [(ngModel)]="isExpressed">Gene Expressed</mat-slide-toggle>
-  <br />
-  <br />
-  <br />
-  <button mat-raised-button color="accent" (click)="predict()">Predict</button>
+  <div class="input-cell">
+    <mat-form-field appearance="outline" color="accent">
+      <mat-label>Select a model</mat-label>
+      <mat-select (selectionChange)="selectModel($event.value)">
+        <mat-option *ngFor="let model of models" value="{{ model }}">{{
+          model
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br />
+    <br />
+    <button
+      mat-raised-button
+      color="accent"
+      (click)="predict()"
+      [disabled]="!model || !testset"
+    >
+      Predict
+    </button>
+    <br /><br />
+    <h3 *ngIf="prediction">{{ prediction }}</h3>
+  </div>
 </div>
 
 <!--The content below is only a placeholder and can be replaced.-->
-<div id="chart" *ngIf="chartOptions">
+<div id="chart">
   <apx-chart
+    *ngIf="chartOptions"
     [series]="chartOptions.series"
     [chart]="chartOptions.chart"
     [dataLabels]="chartOptions.dataLabels"

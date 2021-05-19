@@ -34,6 +34,8 @@ export class HomeComponent implements OnInit {
   negative_color: string = '#7b1fa2';
   @ViewChild('chart') chart;
   chartOptions: Partial<ChartOptions>;
+  testset: number[];
+  prediction: number = null;
   constructor(private dataset: DatasetService) {}
 
   ngOnInit(): void {}
@@ -105,27 +107,32 @@ export class HomeComponent implements OnInit {
     else {
       let shape = this.model.layers[0].inputSpec[0].shape;
       let tensor_test;
-      let testset = this.dataset.loadExampleDataset(this.isExpressed);
       if (shape.length == 4)
-        tensor_test = tf.tensor4d(testset, [
-          testset.length / (shape[1] * shape[2] * shape[3]),
+        tensor_test = tf.tensor4d(this.testset, [
+          this.testset.length / (shape[1] * shape[2] * shape[3]),
           shape[1],
           shape[2],
           shape[3],
         ]);
       else if (shape.length == 3)
-        tensor_test = tf.tensor3d(testset, [
-          testset.length / (shape[1] * shape[2]),
+        tensor_test = tf.tensor3d(this.testset, [
+          this.testset.length / (shape[1] * shape[2]),
           shape[1],
           shape[2],
         ]);
-      let prediction = this.model.predict(tensor_test);
-      console.info(prediction.toString());
-      this.createHeatmap(testset, this.isExpressed);
+      let predictionTensor: tf.Tensor<tf.Rank> | tf.Tensor<tf.Rank>[] =
+        this.model.predict(tensor_test);
+      this.prediction = (predictionTensor as any).dataSync();
     }
   }
 
   upload() {
     console.info('upload');
+  }
+
+  loadExample(isExpressed: boolean) {
+    console.info('loadExample', isExpressed);
+    this.testset = this.dataset.loadExampleDataset(isExpressed);
+    this.createHeatmap(this.testset, isExpressed);
   }
 }

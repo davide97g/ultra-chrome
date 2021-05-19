@@ -9,11 +9,13 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { NgApexchartsModule } from 'ng-apexcharts';
 
+import { FormsModule } from '@angular/forms';
+
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent],
@@ -28,6 +30,7 @@ import { FormsModule } from '@angular/forms';
     MatButtonModule,
     MatSlideToggleModule,
     FormsModule,
+    MatInputModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
