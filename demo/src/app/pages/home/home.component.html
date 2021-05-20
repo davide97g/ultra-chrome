@@ -1,13 +1,13 @@
 <div id="container">
   <h1>Ultra Chrome</h1>
-  <div class="input-cell">
+  <!-- <div class="input-cell">
     <button mat-raised-button color="primary" (click)="upload()">Upload</button>
     <br />
     <br />
     <mat-slide-toggle [(ngModel)]="isExpressed"
       >Gene Expressed</mat-slide-toggle
     >
-  </div>
+  </div> -->
   <div class="input-cell">
     <button mat-raised-button color="accent" (click)="loadExample(true)">
       Load Expressed Example
@@ -39,7 +39,19 @@
       Predict
     </button>
     <br /><br />
-    <h3 *ngIf="prediction">{{ prediction }}</h3>
+    <mat-form-field appearance="outline" color="accent" *ngIf="prediction">
+      <mat-label>Prediction</mat-label>
+      <input matInput [value]="prediction" />
+      <mat-icon matSuffix>visibility</mat-icon>
+      <mat-hint
+        >This is a value between 0 and 1: if > 0.5 gene expressed, not expressed
+        otherwise</mat-hint
+      >
+    </mat-form-field>
+    <br />
+    <br />
+    <h2 *ngIf="prediction && prediction > 0.5">Expressed</h2>
+    <h2 *ngIf="prediction && prediction <= 0.5">Not Expressed</h2>
   </div>
 </div>
 
