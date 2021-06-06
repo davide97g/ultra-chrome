@@ -46,7 +46,9 @@ Live demo [here](https://ultra-chrome.web.app/).
 
 In the `report` folder you can find the final `Report.pdf` along with the `latex` project I developed on [overleaf](https://www.overleaf.com/), an online latex environment.
 
-## Usage
+## Notebooks
+
+All the code written can be found in the `notebooks` folder in `jupyter notebook` format.
 
 In order to reproduce the results reported in the `Report`:
 
