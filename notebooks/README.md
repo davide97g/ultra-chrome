@@ -12,6 +12,10 @@ In this folder I placed all the notebooks used to produce the results.
 - normalize using train data
 - save to numpy format
 
+# converter
+
+- converts tensorflow models to tensorflow-js format
+
 ## models
 
 - loads numpy format

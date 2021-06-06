@@ -20,6 +20,7 @@ Repository for the Human Data Analytics Project 2020/2021.
     /Ultra_Chrome
 /notebooks
     - attentive-chrome.ipynb
+    - converter.ipynb
     - models.ipynb
     - parser.ipynb
     - visualize.ipynb
@@ -33,11 +34,11 @@ Repository for the Human Data Analytics Project 2020/2021.
 
 ## Dataset
 
-The full dataset can be found [here](https://zenodo.org/record/2652278).
+The full dataset used in this project can be found [here](https://zenodo.org/record/2652278).
 
 ## Demo
 
-The demo was develop as `Angular` webapp and is hosted by [`Firebase Hosting`](https://console.firebase.google.com/).
+The demo was develop as an `Angular` webapp and is hosted by [`Firebase Hosting`](https://console.firebase.google.com/).
 
 Live demo [here](https://ultra-chrome.web.app/).
 
